@@ -2,6 +2,7 @@ package com.xcw.freemarker.demo.app.mapper;
 
 import com.alibaba.fastjson.JSONObject;
 import com.querydsl.core.types.Projections;
+import com.xcw.freemarker.demo.app.PageModel;
 import com.xcw.freemarker.demo.app.entity.EmpAndEmpJobDo;
 import com.xcw.freemarker.demo.app.entity.EmpEntity;
 import com.xcw.freemarker.demo.app.entity.QEmpEntity;
@@ -53,10 +54,8 @@ public class EmpMapper extends QueryDslEntityManager {
     /**
      * 查询所有emp记录
      */
-    public List<EmpVO> findAll() {
+    public PageModel<EmpVO> findAll(Pageable pageable) {
         //return convertor.to(empRepository.findAll());
-        Sort sort =Sort.by(Sort.Direction.DESC,"id");
-        Pageable pageable = PageRequest.of(0, 10, sort);
         Specification specification = (Specification<EmpVO>) (root, query, cb) -> {
             Path<Object> uaaId = root.get("uaaId");
 
@@ -65,10 +64,13 @@ public class EmpMapper extends QueryDslEntityManager {
             return cb.and(predicate);
         };
 
-        Page<EmpEntity> list = empRepository.findAll(specification,pageable);
+        Page<EmpEntity> result = empRepository.findAll(specification,pageable);
        // List<EmpVO> li = JSONObject.parseArray(JSONObject.toJSONString(list.getContent()), EmpVO.class);
 
-        return convertor.toDomain(list.getContent());
+        PageModel<EmpVO> res = new PageModel<>();
+        res.setTotal(result.getTotalElements());
+        res.setRows(convertor.toDomain(result.getContent()));
+        return res;
     }
 
 

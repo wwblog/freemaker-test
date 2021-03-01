@@ -1,6 +1,7 @@
 package com.xcw.freemarker.demo.app.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.xcw.freemarker.demo.app.PageModel;
 import com.xcw.freemarker.demo.app.api.vo.EmpAndEmpJobVo;
 import com.xcw.freemarker.demo.app.api.vo.EmpVo;
 import com.xcw.freemarker.demo.app.entity.EmpAndEmpJobDo;
@@ -9,6 +10,8 @@ import com.xcw.freemarker.demo.app.mapper.EmpMapper;
 import com.xcw.freemarker.demo.app.vo.EmpVO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,8 +34,8 @@ public class EmpService implements RpcEmpSercice {
     }
 
     @Override
-    public List<EmpVO> findAllEmp() {
-        List<EmpVO> empVOList = empMapper.findAll();
+    public PageModel<EmpVO> findAllEmp(Pageable pageable) {
+        PageModel<EmpVO> empVOList = empMapper.findAll(pageable);
         log.info("EmpService,查询到的数据为====={}", JSONObject.toJSONString(empVOList));
         return empVOList;
     }

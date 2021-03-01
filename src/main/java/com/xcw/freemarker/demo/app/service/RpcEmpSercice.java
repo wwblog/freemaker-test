@@ -1,10 +1,13 @@
 package com.xcw.freemarker.demo.app.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.xcw.freemarker.demo.app.PageModel;
 import com.xcw.freemarker.demo.app.api.vo.EmpAndEmpJobVo;
 import com.xcw.freemarker.demo.app.api.vo.EmpVo;
 import com.xcw.freemarker.demo.app.entity.EmpEntity;
 import com.xcw.freemarker.demo.app.vo.EmpVO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -25,7 +28,7 @@ public interface RpcEmpSercice {
     /**
      * 查询所有emp
      */
-    public List<EmpVO> findAllEmp();
+    public PageModel<EmpVO> findAllEmp(Pageable pageable);
 
     /**
      * 根据username模糊查找emp
