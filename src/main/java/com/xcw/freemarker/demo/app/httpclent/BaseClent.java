@@ -2,21 +2,12 @@ package com.xcw.freemarker.demo.app.httpclent;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
-import org.springframework.web.reactive.function.client.WebClient;
 
-import javax.annotation.PostConstruct;
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
-
-import static javafx.scene.input.KeyCode.R;
 
 /**
  * @Author xcw
@@ -35,6 +26,14 @@ public class BaseClent {
                     .forEach((name, values) -> values.forEach(value -> log.debug("{}={}", name, value)));
             return next.exchange(clientRequest);
         };
+    }
+
+    protected void logRequestBody(final Object body){
+        log.info("Request Body: {}", JSONObject.toJSONString(body));
+    }
+
+    protected void logResponseBody(final Object body){
+        log.info("Response Body: {}", body);
     }
 
 

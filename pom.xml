@@ -12,6 +12,7 @@
     <artifactId>demo</artifactId>
     <version>0.0.1</version>
     <name>freemarker_demo</name>
+    <packaging>jar</packaging>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -31,6 +32,13 @@
             <version>20200518</version>
         </dependency>
         <!--文字识别-->
+
+        <!--MD5加密-->
+        <dependency>
+            <groupId>org.apache.directory.studio</groupId>
+            <artifactId>org.apache.commons.codec</artifactId>
+            <version>1.8</version>
+        </dependency>
 
         <!--实体于模型之间转换 start-->
         <dependency>

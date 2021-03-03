@@ -1,7 +1,11 @@
 package com.xcw.freemarker.demo.app.httpclent.baidu;
 
+import com.xcw.freemarker.demo.app.httpclent.BaseRequest;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.SuperBuilder;
+import org.springframework.data.annotation.TypeAlias;
 
 /**
  * @Author xcw
@@ -9,20 +13,15 @@ import lombok.Data;
  * @Description 描述
  */
 @Data
-@Builder
-public class BaiDuRequest {
-    /**
-     * 必须参数，固定为client_credentials
-     */
-    private String grant_type;
+@SuperBuilder
+@EqualsAndHashCode(callSuper = true)
+public class BaiDuRequest extends BaseRequest<BaiDuRequestQuery,BaiDuRequestBody> {
 
-    /**
-     * 必须参数，应用的API Key
-     */
-    private String client_id;
-
-    /**
-     * 必须参数，应用的Secret Key
-     */
-    private String client_secret;
+    @Override
+    protected String uri() {
+        StringBuilder uri = new StringBuilder("");
+        TypeAlias t = this.getClass().getAnnotation(TypeAlias.class);
+        uri.append(t.value());
+        return uri.toString();
+    }
 }
